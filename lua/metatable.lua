@@ -1,5 +1,35 @@
--- https://zhuanlan.zhihu.com/p/38127723
 
+-- ========================================================
+-- https://blog.csdn.net/cooclc/article/details/112548031
+local parent = {}
+parent["a"] = 1
+-- -- 如果parent的__index元方法没有赋值为本身，那么child在找metatable时候也不会找到
+-- parent.__index = parent
+
+-- -- 元表的__index字段不一定为自身的表，也可以指向其他表效果一样。
+-- local parent2 = {}
+-- parent2["a"] = 2
+-- parent.__index = parent2
+
+
+-- __index 可以是一个函数 在表中找不到值的时候调用元表中的__index函数
+parent.__index = function() print("metatable __index function value") return "hello" end
+
+local child = {}
+setmetatable(child, parent)
+print(child.a)
+
+-- ========================================================
+-- https://blog.csdn.net/cooclc/article/details/112566933
+
+-- __index 访问表中不存在的值（get）时执行的操作
+-- __nexindex 对表中不存在的值进行赋值（set）时候执行的操作
+-- 如果没有元表，或者元表中没有__newindex字段，那给表新建一个字段则不会执行其他多余的操作
+-- 如果__newindex字段指向一个函数，则给表创建一个新字段的时候，则会执行该函数，且对本表创建不成功
+
+-- ========================================================
+
+-- https://zhuanlan.zhihu.com/p/38127723
 local smartMan = { 
 	name = "none", 
         money = 9000000, 
@@ -46,23 +76,3 @@ print("t1的名字:" .. t1.name);
 -->> 这部分的内容可以在项目中看到
 --]]
 
-
-
--- https://blog.csdn.net/cooclc/article/details/112548031
-local parent = {}
-parent["a"] = 1
--- -- 如果parent的__index元方法没有赋值为本身，那么child在找metatable时候也不会找到
--- parent.__index = parent
-
--- -- 元表的__index字段不一定为自身的表，也可以指向其他表效果一样。
--- local parent2 = {}
--- parent2["a"] = 2
--- parent.__index = parent2
-
-
--- __index 可以是一个函数 在表中找不到值的时候调用元表中的__index函数
-parent.__index = function() print("metatable __index function value") return "hello" end
-
-local child = {}
-setmetatable(child, parent)
-print(child.a)
