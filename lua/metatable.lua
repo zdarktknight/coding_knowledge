@@ -45,3 +45,24 @@ print("t1的名字:" .. t1.name);
 -->> 从上述的表述中可以看到,function 传入的参数有2个，第一个是table1，第二个是key, 这个key是调用的时候，传入的key（A.xxx, A:yyy, key=xxx, key=yyy）
 -->> 这部分的内容可以在项目中看到
 --]]
+
+
+
+-- https://blog.csdn.net/cooclc/article/details/112548031
+local parent = {}
+parent["a"] = 1
+-- -- 如果parent的__index元方法没有赋值为本身，那么child在找metatable时候也不会找到
+-- parent.__index = parent
+
+-- -- 元表的__index字段不一定为自身的表，也可以指向其他表效果一样。
+-- local parent2 = {}
+-- parent2["a"] = 2
+-- parent.__index = parent2
+
+
+-- __index 可以是一个函数 在表中找不到值的时候调用元表中的__index函数
+parent.__index = function() print("metatable __index function value") return "hello" end
+
+local child = {}
+setmetatable(child, parent)
+print(child.a)
