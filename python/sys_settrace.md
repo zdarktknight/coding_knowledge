@@ -48,7 +48,7 @@ function()
 sys.settrace(None)
 ```
 
-#### 高级使用
+#### 高级使用 1
 ```
 import sys
 from functools import wraps
@@ -89,5 +89,57 @@ if __name__ == "__main__":
     bSort(arr)
 ```
 
+#### 高级使用 2
+
+```
+import sys
+
+UPTO_LINE = 1
+
+def t(frame, event, arg):
+    num = frame.f_lineno
+    print("line %d" % num)
+    if num < UPTO_LINE:
+        return t
+
+def try_it():
+    print("twelve")
+    print("thirteen")
+    print("fourteen")
+    print("fifteen")
+
+UPTO_LINE = 1
+sys.settrace(t)
+try_it()
+
+UPTO_LINE = 13
+sys.settrace(t)
+try_it()
+```
+Produces:
+```
+line 11
+twelve
+thirteen
+fourteen
+fifteen
+line 11
+line 12
+twelve
+line 13
+thirteen
+line 14
+fourteen
+line 15
+fifteen
+line 15
+```
+The first call to try_it() returns None immediately, preventing tracing for the rest of the function.
+
+The second call returns None at line 13, but the rest of the function is traced anyway.
+
+This behavior is the same in all versions from 2.3 to 3.2, in fact, the 100 lines of code in sysmodule.c responsible for Python tracing functions are completely unchanged through those versions.
+
 以上内容节选自：
 >https://www.cnblogs.com/shuzf/p/17201149.html
+>https://github.com/python/cpython/issues/56201

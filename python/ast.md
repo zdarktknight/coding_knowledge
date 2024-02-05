@@ -100,6 +100,11 @@ Python AST 中的每个节点类型在 ast 包中都有一个对应的类。
 `print(ast.IF.__fields)`
 打印输出为 `('test', 'body', 'orelse')`
 
+#### 4.1 ast.walk()
+bfs 访问 tree 的节点
+
+#### 4.2 ast.NodeVisitor()
+dfs 访问 tree 的节点: walk the tree with recursion.
 
 **上内容节选自：**
 >https://www.ai8py.com/analyzing-python-with-the-ast-package.html
