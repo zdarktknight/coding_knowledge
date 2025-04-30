@@ -1,0 +1,24 @@
+<view class="container">
+  <swiper class="product-images" indicator-dots="true">
+    <block wx:for="{{product.images}}" wx:key="*this">
+      <swiper-item>
+        <image src="{{item}}" mode="aspectFill"/>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="product-info">
+    <text class="product-name">{{product.name}}</text>
+    <text class="product-price">¥{{product.price}}</text>
+    <text class="product-description">{{product.description}}</text>
+  </view>
+
+  <view class="booking-section">
+    <picker mode="date" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange">
+      <view class="picker">
+        预定日期：{{selectedDate}}
+      </view>
+    </picker>
+    <button class="booking-btn" type="primary" bindtap="onBooking">立即预定</button>
+  </view>
+</view>

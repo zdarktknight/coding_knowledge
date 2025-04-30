@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="order-list">
+    <block wx:for="{{orders}}" wx:key="id">
+      <view class="order-item">
+        <image src="{{item.product.image}}" mode="aspectFill"/>
+        <view class="order-info">
+          <text class="product-name">{{item.product.name}}</text>
+          <text class="booking-date">预定日期：{{item.bookingDate}}</text>
+          <text class="order-status">{{item.status}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
